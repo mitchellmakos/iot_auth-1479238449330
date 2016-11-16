@@ -9,23 +9,23 @@ var cloudant = Cloudant({account:cloudant_service.username, password:cloudant_se
 var db = cloudant.db.use('users');
 var bcrypt = require('bcryptjs');
 
-//var newUser = {
-//		id : undefined,
-//		company: req.body.company,
-//		name: req.body.name,
-//		title: req.body.title,
-//		email: req.body.email,
-//		phone: req.body.phone,
-//        auth_token: req.body.auth_token,
-//        username: req.body.username,
-//        password: req.body.password,
-//        dev_id_1: req.body.dev_id_1,
-//        dev_id_2: req.body.dev_id_2,
-//        dev_id_3: req.body.dev_id_3,
-//        dev_id_4: req.body.dev_id_4,
-//        dev_id_5: req.body.dev_id_5,
-//        dev_id_6: req.body.dev_id_6
-//	};
+var newUser = {
+		id : null,
+		company: null,
+		name: null,
+		title: null,
+		email: null,
+		phone: null,
+        auth_token: null,
+        username: null,
+        password: null,
+        dev_id_1: null,
+        dev_id_2: null,
+        dev_id_3: null,
+        dev_id_4: null,
+        dev_id_5: null,
+        dev_id_6: null
+	};
 
 var getUserById = function(id, callback){
 	var query = {id: id};
@@ -65,29 +65,30 @@ router.post('/login',
 
 
 var createUser = function(company, name, title, email, phone, auth_token, username, password, dev_id_1, dev_id_2, dev_id_3, dev_id_4, dev_id_5, dev_id_6) {
-	//	encrypting password
-	bcrypt.genSalt(10, function(err, salt) {
+	   	//	encrypting password
+		bcrypt.genSalt(10, function(err, salt) {
 	   	bcrypt.hash(password, salt, function(err, hash) {
 				password = hash;
    			});
 		});
-   			
-	db.insert({
-		company: company,
-		name: name,
-		title: title,
-		email: email,
-		phone: phone,
-        auth_token: auth_token,
-        username: username,
-        password: password,
-        dev_id_1: dev_id_1,
-        dev_id_2: dev_id_2,
-        dev_id_3: dev_id_3,
-        dev_id_4: dev_id_4,
-        dev_id_5: dev_id_5,
-        dev_id_6: dev_id_6
-	}, id, function(err, doc){
+		
+		var user = newUser;
+		user.company = company;
+		user.name = name;
+		user.title = title;
+		user.email = email;
+		user.phone = phone;
+		user.auth_token = auth_token;
+		user.username = username;
+		user.password = password;
+		user.dev_id_1 = dev_id_1;
+		user.dev_id_2 = dev_id_2;
+		user.dev_id_3 = dev_id_3;
+		user.dev_id_4 = dev_id_4;
+		user.dev_id_5 = dev_id_5;
+		user.dev_id_6 = dev_id_6;
+					   			
+	db.insert(user, email, function(err, doc){
 		if(err) {
 			console.log(err);
 			response.sendStatus(500);

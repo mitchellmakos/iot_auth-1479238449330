@@ -1,4 +1,4 @@
-"VCAP_SERVICES":{
+{
   "cloudantNoSQLDB": [
     {
       "credentials": {
