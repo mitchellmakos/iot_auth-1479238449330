@@ -11,6 +11,10 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var bcrypt = require('bcryptjs');
 var Cloudant = require('cloudant');
+var http = require('http');
+var appEnv = cfenv.getAppEnv();
+var cfenv = require('cfenv');
+var request = require('request');
 
 
 
@@ -93,6 +97,15 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+var port = process.env.PORT;
+// all environments
+app.set('port', port || 443);
+console.log("port: ", port); 
+
+app.listen( process.env.PORT, appEnv.bind, function() {
+    console.log('Server starting on ' + process.env.PORT);
 });
 
 module.exports = app;
