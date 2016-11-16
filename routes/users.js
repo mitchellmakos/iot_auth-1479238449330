@@ -34,7 +34,7 @@ var getUserById = function(id, callback){
 
 var getUserByUsername = function(username, callback){
 	var query = {username: username};
-	db.finde(query, callback);
+	db.find(query, callback);
 };
 
 var comparePassword = function(candidatePassword, hash, callback){
@@ -63,32 +63,6 @@ router.post('/login',
    res.redirect('/');
 });
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  getUserById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-passport.use(new LocalStrategy(function(username, password, done){
-  getUserByUsername(username, function(err, user){
-    if(err) throw err;
-    if(!user){
-      return done(null, false, {message: 'Unknown User'});
-    }
-
-    comparePassword(password, user.password, function(err, isMatch){
-      if(err) return done(err);
-      if(isMatch){
-        return done(null, user);
-      } return done(null, false, {message:'Invalid Password'}); 
-        
-    });
-  });
-}));
 
 var createUser = function(company, name, title, email, phone, auth_token, username, password, dev_id_1, dev_id_2, dev_id_3, dev_id_4, dev_id_5, dev_id_6) {
 	//	encrypting password
@@ -123,7 +97,7 @@ var createUser = function(company, name, title, email, phone, auth_token, userna
 	});
 }
 
-router.post('/register', function(req, res, next) { 
+router.post('/users', function(req, res, next) { 
 	var company = req.body.company;
 	var name = req.body.name;
 	var title = req.body.title;
@@ -164,6 +138,54 @@ router.post('/register', function(req, res, next) {
       res.location('/');
       res.redirect('/');
   }
+});
+
+router.get('/users/all_docs', function(request, response) {
+    var doc = request.query.id;
+    var key = request.query.key;
+
+    db.users.get(doc, key, function(err, body) {
+        if (err) {
+            response.status(500);
+            response.setHeader('Content-Type', 'text/plain');
+            response.write('Error: ' + err);
+            response.end();
+            return;
+        }
+
+        response.status(200);
+        response.setHeader("Content-Disposition", 'inline; filename="' + key + '"');
+        response.write(body);
+        response.end();
+        
+        passport.serializeUser(function(user, done) {
+		  done(null, user.id);
+		});
+		
+		passport.deserializeUser(function(id, done) {
+		  getUserById(id, function(err, user) {
+		    done(err, user);
+		  });
+		});
+		
+		passport.use(new LocalStrategy(function(username, password, done){
+		  getUserByUsername(username, function(err, user){
+		    if(err) throw err;
+		    if(!user){
+		      return done(null, false, {message: 'Unknown User'});
+		    }
+		
+		    comparePassword(password, user.password, function(err, isMatch){
+		      if(err) return done(err);
+		      if(isMatch){
+		        return done(null, user);
+		      } return done(null, false, {message:'Invalid Password'}); 
+		        
+		    });
+		  });
+		}));
+        
+    });
 });
 
 router.get('/logout', function(req, res){
