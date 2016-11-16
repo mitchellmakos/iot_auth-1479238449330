@@ -10,8 +10,20 @@ block content
      li.alert.alert-danger #{error.msg}
   form(method='post', action='/users/register')
    .form-group
-    label Organization Name
-    input.form-control(name='org_name', type='text', placeholder='Enter Organization Name')
+    label Company Name
+    input.form-control(name='company', type='text', placeholder='Enter Company Name')
+    .form-group
+    label Name
+    input.form-control(name='name', type='text', placeholder='Enter Name')
+    .form-group
+    label Title
+    input.form-control(name='title', type='text', placeholder='Enter Title')
+    .form-group
+    label Email
+    input.form-control(name='email', type='text', placeholder='Enter Email')
+    .form-group
+    label Phone
+    input.form-control(name='phone', type='text', placeholder='Enter Phone')
     .form-group
     label Rexnord Authentication Token
     input.form-control(name='auth_token', type='text', placeholder='Enter Your Rexnord Authentication Token')

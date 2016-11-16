@@ -10,15 +10,17 @@ var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var bcrypt = require('bcryptjs');
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var db = mongoose.connection;
+var Cloudant = require('cloudant');
+
+
 
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
