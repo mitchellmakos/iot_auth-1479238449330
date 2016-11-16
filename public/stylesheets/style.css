@@ -1,0 +1,67 @@
+ul.success li{
+	padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    list-style: none;
+}
+
+ul.error li{
+	padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+ 	color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    list-style: none;
+}
+
+.login{
+    margin: auto;
+    width: 30%;
+    padding-top: 30px;
+    border: 3px solid black;
+    padding: 10px;
+    
+}
+
+.register{
+    margin: auto;
+    width: 40%;
+    padding-top: 30px;
+    border: 3px solid black;
+    padding: 10px;
+}
+
+h2.page-header{
+    text-align: center;
+    margin-top: 0px;
+}
+
+p{
+    text-align: center;
+}
+
+input.btn.btn-success{
+    float: right;
+    width: 20%;
+}
+
+.avatar{
+    height: 80%;
+    width: 80%;
+}
+
+.iot{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+    text-align: center;
+}
+
+
+

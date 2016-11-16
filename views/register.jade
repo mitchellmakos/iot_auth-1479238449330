@@ -1,0 +1,45 @@
+extends layout
+
+block content
+ .register
+  h2.page-header Register
+  p Please register using the form below
+  ul.errors
+   if errors
+    each error, i in errors
+     li.alert.alert-danger #{error.msg}
+  form(method='post', action='/users/register')
+   .form-group
+    label Organization Name
+    input.form-control(name='org_name', type='text', placeholder='Enter Organization Name')
+    .form-group
+    label Rexnord Authentication Token
+    input.form-control(name='auth_token', type='text', placeholder='Enter Your Rexnord Authentication Token')
+    .form-group
+    label Username
+    input.form-control(name='username', type='text', placeholder='Enter Username')
+    .form-group
+    label Password
+    input.form-control(name='password', type='password', placeholder='Enter Password')
+    .form-group
+    label Confirm Password
+    input.form-control(name='password2', type='password', placeholder='Confirm Password')
+    .form-group
+    label Device ID 1
+    input.form-control(name='dev_id_1', type='text', placeholder='Enter Device ID')
+    .form-group
+    label Device ID 2
+    input.form-control(name='dev_id_2', type='text', placeholder='Enter Device ID')
+    .form-group
+    label Device ID 3
+    input.form-control(name='dev_id_3', type='text', placeholder='Enter Device ID')
+    .form-group
+    label Device ID 4
+    input.form-control(name='dev_id_4', type='text', placeholder='Enter Device ID')
+    .form-group
+    label Device ID 5
+    input.form-control(name='dev_id_5', type='text', placeholder='Enter Device ID')
+    .form-group
+    label Device ID 6
+    input.form-control(name='dev_id_6', type='text', placeholder='Enter Device ID')
+   input.btn.btn-primary(type='submit', name='submit',value='Register')
