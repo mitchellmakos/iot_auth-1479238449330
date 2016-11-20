@@ -12,26 +12,28 @@ var flash = require('connect-flash');
 var bcrypt = require('bcryptjs');
 var Cloudant = require('cloudant');
 var http = require('http');
-var appEnv = cfenv.getAppEnv();
 var cfenv = require('cfenv');
 var request = require('request');
 
 
-
+var appEnv = cfenv.getAppEnv();
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
+// development only
+if ('development' == app.get('env')) {
+	app.use(errorHandler());
+}
 
 
 // view engine setup
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -99,10 +101,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var port = process.env.PORT;
-// all environments
-app.set('port', port || 443);
-console.log("port: ", port); 
+//var port = process.env.PORT;
+//// all environments
+//app.set('port', port || 443);
+//console.log("port: ", port); 
 
 app.listen( process.env.PORT, appEnv.bind, function() {
     console.log('Server starting on ' + process.env.PORT);
